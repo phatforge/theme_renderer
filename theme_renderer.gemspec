@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'guard-rails_best_practices'
   s.add_development_dependency 'guard-brakeman'
   s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'coveralls'
   s.add_development_dependency 'minitest', '~> 4.7.5'
   s.add_development_dependency 'mark'
   s.add_development_dependency 'pry'
