@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Theme renderer to better scale in whitelabel solutions'
   s.description = 'Theme renderer for white label solution. This component will render from alternate theme stores'
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ['LICENSE.txt.txt', 'Rakefile', 'README.md']
+  s.files = Dir["{app,config,db,lib}/**/*"] + ['LICENSE.txt', 'Rakefile', 'README.md']
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency 'rails', '~> 3.2.17'
