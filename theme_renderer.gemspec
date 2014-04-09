@@ -7,11 +7,11 @@ require "theme_renderer/version"
 Gem::Specification.new do |s|
   s.name        = "theme_renderer"
   s.version     = ThemeRenderer::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of ThemeRenderer."
-  s.description = "TODO: Description of ThemeRenderer."
+  s.authors     = ["Pritesh Mehta"]
+  s.email       = ["pritesh@phatforge.com"]
+  s.homepage    = "https://github.com/phatforge/theme_renderer"
+  s.summary     = "Theme renderer to better scale in whitelabel solutions"
+  s.description = "Theme renderer for white label solution. This component will render from alternate theme stores"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
