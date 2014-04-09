@@ -1,3 +1,6 @@
+require 'minitest/spec'
+require 'minitest/autorun'
+
 # Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
