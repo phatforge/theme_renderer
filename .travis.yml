@@ -1,0 +1,21 @@
+language: ruby
+cache: bundler
+
+rvm:
+  - jruby
+  - 2.0.0
+  - 2.1.1
+  - 1.9.3-p327
+
+script: 'bundle exec rake'
+
+notifications:
+  slack:
+    rooms:
+      - phatforge:ClGTk0rAfE5QxM9bg1Usj6Lo#general
+      - phatforge:ClGTk0rAfE5QxM9bg1Usj6Lo#random
+  email:
+    recipients:
+      - pritesh@phatforge.com
+    on_failure: always
+    on_success: change
