@@ -16,10 +16,10 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ['LICENSE.txt', 'Rakefile', 'README.md']
   s.test_files = Dir["test/**/*"]
 
+  s.add_dependency 'buff-config', '~> 0.3'
   s.add_runtime_dependency 'rails', '~> 3.2.17'
   s.add_runtime_dependency 'tilt'
 
-  s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rails_best_practices'
   s.add_development_dependency 'guard-minitest'
   s.add_development_dependency 'guard-bundler'

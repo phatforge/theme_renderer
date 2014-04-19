@@ -7,15 +7,28 @@ guard :bundler do
   watch(/^.+\.gemspec/)
 end
 
+guard :rails_best_practices, run_on_start: false do
+    watch(%r{^app/(.+)\.rb$})
+end
+
+guard :brakeman, run_on_start: false do
+  watch(%r{^app/.+\.(erb|haml|rhtml|rb)$})
+  watch(%r{^config/.+\.rb$})
+  watch(%r{^lib/.+\.rb$})
+  watch('Gemfile')
+end
+
 guard :minitest do
   # with Minitest::Unit
-  #watch(%r{^test/(.*)\/?test_(.*)\.rb$})
-  #watch(%r{^lib/(.*/)?([^/]+)\.rb$})     { |m| "test/#{m[1]}test_#{m[2]}.rb" }
-  #watch(%r{^test/test_helper\.rb$})      { 'test' }
+  watch(%r{^test/(.*)\/?test_(.*)\.rb$})
+  watch(%r{^lib/(.*/)?([^/]+)\.rb$})     { |m| "test/#{m[1]}test_#{m[2]}.rb" }
+  watch(%r{^test/test_helper\.rb$})      { 'test' }
 
   # with Minitest::Spec
   watch(%r{^spec/(.*)_spec\.rb$})
-  watch(%r{^lib/(.+)\.rb$})         {|m| "spec/#{m[1]}_spec.rb" }
+  watch(%r{^test/(.*)_test\.rb$})
+  watch(%r{^lib/(.+)\.rb$})         {|m| "test/#{m[1]}_test.rb" }
+  watch(%r{^lib/theme_renderer/(.+)\.rb$})         {|m| "test/model/#{m[1]}_test.rb" }
   watch(%r{^test/test_helper\.rb$}) {'test' }
   watch(%r{^spec/spec_helper\.rb$}) {'spec' }
 
@@ -34,13 +47,3 @@ guard :minitest do
   # watch(%r{^app/models/(.*)\.rb$})      { |m| "test/unit/#{m[1]}_test.rb" }
 end
 
-guard :rails_best_practices, run_on_start: false do
-    watch(%r{^app/(.+)\.rb$})
-end
-
-guard :brakeman, run_on_start: false do
-  watch(%r{^app/.+\.(erb|haml|rhtml|rb)$})
-  watch(%r{^config/.+\.rb$})
-  watch(%r{^lib/.+\.rb$})
-  watch('Gemfile')
-end
