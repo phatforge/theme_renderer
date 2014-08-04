@@ -11,8 +11,12 @@ describe ThemeRenderer::Config do
         @config = subject.new
       end
 
-      it "has a default value for 'theme.storage'" do
-        @config.theme.storage.wont_be_nil
+      it "has a default value for 'theme_id'" do
+        @config.theme_id.wont_be_nil
+      end
+
+      it "has a default value for 'theme.stores'" do
+        @config.theme.stores.wont_be_nil
       end
     end
 
@@ -22,16 +26,15 @@ describe ThemeRenderer::Config do
         invalid_config.expect(:valid?, false)
         invalid_config.expect(:errors, [])
 
-        subject.validate!(invalid_config).must_raise(TR::InvalidConfig)
+        proc { subject.validate!(invalid_config) }.must_raise TR::InvalidConfig
         assert invalid_config.verify
       end
     end
-
   end
 
   it 'should be valid by default' do
     config = ThemeRenderer::Config.new
     config.valid?.must_equal true
-    config.storage.must_equal ::ThemeRenderer::Storage::File
+    config.theme.stores.must_include "TR::ThemeStorage::File"
   end
 end

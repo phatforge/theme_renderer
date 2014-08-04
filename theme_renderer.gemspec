@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ['LICENSE.txt', 'Rakefile', 'README.md']
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency 'buff-config', '~> 0.3'
+  s.add_dependency 'buff-config', '~> 1.0.1'
   s.add_runtime_dependency 'rails', '~> 3.2.17'
   s.add_runtime_dependency 'tilt'
 
@@ -29,8 +29,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'minitest', '~> 4.7.5'
+  s.add_development_dependency 'capybara'
   s.add_development_dependency 'mark'
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'pry-remote'
-  s.add_development_dependency 'pry-nav'
 end

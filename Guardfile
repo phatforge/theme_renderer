@@ -7,7 +7,7 @@ guard :bundler do
   watch(/^.+\.gemspec/)
 end
 
-guard :rails_best_practices, run_on_start: false do
+guard :rails_best_practices, run_at_start: false, all_after_pass: true do
     watch(%r{^app/(.+)\.rb$})
 end
 
@@ -18,7 +18,7 @@ guard :brakeman, run_on_start: false do
   watch('Gemfile')
 end
 
-guard :minitest do
+guard :minitest, all_after_pass: true do
   # with Minitest::Unit
   watch(%r{^test/(.*)\/?test_(.*)\.rb$})
   watch(%r{^lib/(.*/)?([^/]+)\.rb$})     { |m| "test/#{m[1]}test_#{m[2]}.rb" }

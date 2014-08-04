@@ -8,14 +8,6 @@ module ThemeRenderer
       super(message)
       @message = message
     end
-
-    #def message
-      #@message ||= self.class.to_s
-    #end
-
-    #def to_s
-      #"[message]: #{message}"
-    #end
   end
 
   class InvalidConfig < TRError
