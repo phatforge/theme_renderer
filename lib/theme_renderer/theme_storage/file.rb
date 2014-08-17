@@ -26,8 +26,10 @@ module ThemeRenderer
       end
 
       def get_theme_path
+        # puts config.inspect
+        # puts @theme_path
         theme_id = normalize_theme_id(config.theme_id)
-        @theme_path ||= [Rails.root, theme_root, theme_id].join('/')
+        @theme_path ||= [::Rails.root, theme_root, theme_id].join('/')
       end
 
       def normalize_theme_id(theme_id)

@@ -30,7 +30,6 @@ guard :minitest, all_after_pass: true do
   watch(%r{^lib/(.+)\.rb$})         {|m| "test/#{m[1]}_test.rb" }
   watch(%r{^lib/theme_renderer/(.+)\.rb$})         {|m| "test/model/#{m[1]}_test.rb" }
   watch(%r{^test/test_helper\.rb$}) {'test' }
-  watch(%r{^spec/spec_helper\.rb$}) {'spec' }
 
   # Rails 4
   # watch(%r{^app/(.+)\.rb$})                               { |m| "test/#{m[1]}_test.rb" }

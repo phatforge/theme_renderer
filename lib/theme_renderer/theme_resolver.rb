@@ -3,7 +3,7 @@ module ThemeRenderer
 
     attr_reader :config
 
-    def initialize(new_config)
+    def initialize(new_config=Config.new)
       set_config(new_config)
       super()
     end

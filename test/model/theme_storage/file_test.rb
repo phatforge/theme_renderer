@@ -15,7 +15,7 @@ describe ThemeRenderer::ThemeStorage::File do
 
     it 'should return a template object' do
       record = ThemeRenderer::ThemeResolver.new(config).
-                 find_templates('show', 'posts', false, @details).first
+                 find_templates('show', 'post', false, @details).first
       subject.new(config).initialize_template(record).must_be_kind_of ActionView::Template
     end
   end

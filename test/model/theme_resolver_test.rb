@@ -17,19 +17,19 @@ describe ThemeRenderer::ThemeResolver do
 
     it "must be empty when there is no template" do
       @resolver = subject.new(config_base)
-      @resolver.find_all('index', 'posts', false, @details).must_be_empty
+      @resolver.find_all('index', 'post', false, @details).must_be_empty
     end
 
     it "returns an ActionView::Template instance" do
-      template = @resolver.find_all('show', 'posts', false, @details).first
+      template = @resolver.find_all('show', 'post', false, @details).first
       template.must_be_kind_of ActionView::Template
     end
 
     it "returns a template with the correct details" do
-      template = @resolver.find_all('show', 'posts', false, @details).first
+      template = @resolver.find_all('show', 'post', false, @details).first
       template.source.must_match /POST SHOW View Template - Dummy 1 Theme/
       template.formats.must_equal [:html]
-      template.virtual_path.must_equal 'posts/show'
+      template.virtual_path.must_equal 'post/show'
       template.handler.must_be_same_as Haml::Plugin
     end
   end
