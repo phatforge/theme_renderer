@@ -13,7 +13,7 @@ require "rails/test_help"
 require 'minitest/spec'
 require 'minitest/autorun'
 require 'capybara/rails'
-require 'theme_renderer'
+require 'capybara_minitest_spec'
 
 Rails.backtrace_cleaner.remove_silencers!
 
@@ -26,6 +26,7 @@ if ActiveSupport::TestCase.method_defined?(:fixture_path=)
 end
 
 class IntegrationTest < MiniTest::Spec
+  include Rails.application.routes.url_helpers
   include Capybara::DSL
   register_spec_type(/integration$/, self)
 end

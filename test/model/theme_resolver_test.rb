@@ -17,7 +17,7 @@ describe ThemeRenderer::ThemeResolver do
 
     it "must be empty when there is no template" do
       @resolver = subject.new(config_base)
-      @resolver.find_all('index', 'post', false, @details).must_be_empty
+      @resolver.find_all('edit', 'post', false, @details).must_be_empty
     end
 
     it "returns an ActionView::Template instance" do

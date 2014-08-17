@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'minitest', '~> 4.7.5'
   s.add_development_dependency 'capybara'
+  s.add_development_dependency 'capybara_minitest_spec'
   s.add_development_dependency 'mark'
   s.add_development_dependency 'pry'
 end
