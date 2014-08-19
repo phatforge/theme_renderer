@@ -37,4 +37,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'capybara_minitest_spec'
   s.add_development_dependency 'mark'
   s.add_development_dependency 'pry'
+  s.add_development_dependency 'rubycritic'
 end
