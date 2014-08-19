@@ -27,7 +27,7 @@ describe ThemeRenderer::ThemeResolver do
 
     it "returns a template with the correct details" do
       template = @resolver.find_all('show', 'post', false, @details).first
-      template.source.must_match /POST SHOW View Template - Dummy 1 Theme/
+      template.source.must_match(/POST SHOW View Template - Dummy 1 Theme/)
       template.formats.must_equal [:html]
       template.virtual_path.must_equal 'post/show'
       template.handler.must_be_same_as Haml::Plugin

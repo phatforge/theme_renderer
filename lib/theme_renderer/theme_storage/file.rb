@@ -6,8 +6,9 @@ module ThemeRenderer
       attr_accessor :config, :theme_root, :theme_path
 
       def initialize(config, pattern=nil)
-        set_config(config)
-        @theme_path = get_theme_path
+        config.validate!
+        @config = config
+        @theme_path = resolve_theme_path
         super(theme_path, pattern)
       end
 
@@ -18,14 +19,14 @@ module ThemeRenderer
       private
 
       def records(conditions={})
-        records = find_templates(conditions[:name],
-                                 conditions[:prefix],
-                                 conditions[:partial],
-                                 conditions[:details]
-                                )
+        find_templates(conditions[:name],
+                       conditions[:prefix],
+                       conditions[:partial],
+                       conditions[:details]
+                      )
       end
 
-      def get_theme_path
+      def resolve_theme_path
         # puts config.inspect
         # puts @theme_path
         theme_id = normalize_theme_id(config.theme_id)
@@ -39,11 +40,6 @@ module ThemeRenderer
       def theme_root
         klass_name = self.class.name.demodulize.downcase
         @theme_root ||= config.storage.send(klass_name).theme_root
-      end
-
-      def set_config(config)
-        config.validate!
-        @config = config
       end
     end
   end

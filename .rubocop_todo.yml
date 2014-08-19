@@ -4,52 +4,42 @@
 # one by one as the offenses are removed from the code base.
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
-
-# Offense count: 1
-Lint/AmbiguousRegexpLiteral:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Lint/StringConversionInInterpolation:
-  Enabled: false
-
 # Offense count: 1
 Lint/UnreachableCode:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Lint/UnusedBlockArgument:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Lint/UnusedMethodArgument:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 2
 Lint/UselessAssignment:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 4
 Rails/Output:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 4
 Style/AccessorMethodName:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 8
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/AlignParameters:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/Blocks:
-  Enabled: false
+  Enabled: true
 
 # Offense count: 1
 Style/ClassVars:

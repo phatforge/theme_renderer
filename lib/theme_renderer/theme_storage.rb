@@ -2,7 +2,7 @@ module ThemeRenderer
   module ThemeStorage
     module CoreMethods
       def get(conditions={})
-        templates = records(conditions).flatten.collect do |record|
+        records(conditions).flatten.collect do |record|
           initialize_template(record)
         end
       end

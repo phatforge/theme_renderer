@@ -4,7 +4,7 @@ module ThemeRenderer
     module AttributeResolver
       def self.included(base)
         base.send :include, ThemeRenderer::Rails::AttributeResolver::InstanceMethods
-        base.send :before_filter, :set_theme_resolver
+        base.send :before_filter, :resolve_theme_views
       end
 
       # Instance Methods to be included into ApplicationController instances
@@ -13,7 +13,7 @@ module ThemeRenderer
         @@theme_resolver = {}
 
         # set_theme_resolver_for_current_request
-        def set_theme_resolver(themeable_instance = current_themeable_instance)
+        def resolve_theme_views(themeable_instance = current_themeable_instance)
           return unless themeable_instance
           resolver = theme_resolver_for(themeable_instance)
           activate_theme(resolver)
@@ -34,7 +34,9 @@ module ThemeRenderer
         end
 
         def current_themeable_instance
-          current_themeable_instance = Object.const_get(theme_class.camelize.singularize).
+          # current_themeable_instance = Object.const_get(theme_class.camelize.singularize).
+          #   find_by_id(params[:"#{theme_class}_id"])
+          Object.const_get(theme_class.camelize.singularize).
             find_by_id(params[:"#{theme_class}_id"])
         end
 

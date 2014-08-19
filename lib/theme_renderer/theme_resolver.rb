@@ -3,13 +3,13 @@ module ThemeRenderer
 
     attr_reader :config
 
-    def initialize(new_config=Config.new)
-      set_config(new_config)
+    def initialize(config=Config.new)
+      config.validate!
+      @config = config
       super()
     end
 
-    def find_templates(name, prefix, partial, details, template_klass=nil)
-
+    def find_templates(name, prefix, partial, details)
       conditions = {
         name: name,
         prefix: prefix,
@@ -46,11 +46,6 @@ module ThemeRenderer
 
     def normalize_path(name, prefix)
       [prefix, name].compact.join('/')
-    end
-
-    def set_config(config)
-      config.validate!
-      @config = config
     end
   end
 end

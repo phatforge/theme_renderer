@@ -19,7 +19,6 @@ module ThemeRenderer
     end
 
     def message
-      return
       msg = errors.collect do |key, messages|
         "* #{key}: #{messages.join(', ')}"
       end

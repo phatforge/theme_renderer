@@ -8,7 +8,7 @@ module ThemeRenderer
     config.theme_renderer = ThemeRenderer::Config.new
 
     initializer "Set up default parent engine" do |app|
-      config.theme_renderer.parent_engine ||= ::Rails.application
+      config.theme_renderer.parent_engine ||= app
     end
 
     initializer 'theme_renderer.action_controller_hook' do
