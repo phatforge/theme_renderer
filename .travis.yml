@@ -9,7 +9,6 @@ rvm:
 
 script:
   - cp test/dummy/config/database.travis.yml test/dummy/config/database.yml
-  - bundle exec rake app:db:test:prepare --trace
   - bundle exec rake
 
 notifications:
