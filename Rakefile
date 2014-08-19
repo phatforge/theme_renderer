@@ -35,4 +35,5 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = false
 end
 
+task test: 'app:db:migrate'
 task default: :test

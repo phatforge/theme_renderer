@@ -31,3 +31,8 @@ class IntegrationTest < MiniTest::Spec
   include Capybara::DSL
   register_spec_type(/integration$/, self)
 end
+
+if Rails.configuration.database_configuration['test']['database'] == ':memory:'
+  puts 'creating sqlite in memory database'
+  load "#{Rails.root}/db/schema.rb"
+end
