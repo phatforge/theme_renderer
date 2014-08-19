@@ -1,7 +1,7 @@
-$:.push File.expand_path('../lib', __FILE__)
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 # Maintain your gem's version:
-require "theme_renderer/version"
+require 'theme_renderer/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
@@ -11,10 +11,14 @@ Gem::Specification.new do |s|
   s.email       = ['pritesh@phatforge.com']
   s.homepage    = 'https://github.com/phatforge/theme_renderer'
   s.summary     = 'Theme renderer to better scale in whitelabel solutions'
-  s.description = 'Theme renderer for white label solution. This component will render from alternate theme stores'
+  s.description = <<-DESC
+  Theme renderer for white label solution.
+  This component will render from alternate theme stores
+  DESC
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ['LICENSE.txt', 'Rakefile', 'README.md']
-  s.test_files = Dir["test/**/*"]
+  s.files       = Dir['{app,config,db,lib}/**/*']
+  s.files       += ['LICENSE.txt', 'Rakefile', 'README.md']
+  s.test_files  = Dir['{test,spec}/**/*']
 
   s.add_dependency 'buff-config', '~> 1.0.1'
   s.add_runtime_dependency 'rails', '~> 3.2.17'

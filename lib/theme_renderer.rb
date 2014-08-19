@@ -13,5 +13,5 @@ end
 TR = ThemeRenderer
 
 module ThemeRenderer
-  require "theme_renderer/engine" if defined?(Rails)
+  require 'theme_renderer/engine' if defined?(Rails)
 end

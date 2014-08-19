@@ -1,7 +1,7 @@
 module ThemeRenderer
   module ThemeStorage
     module CoreMethods
-      def get(conditions={})
+      def get(conditions = {})
         records(conditions).flatten.collect do |record|
           initialize_template(record)
         end
@@ -9,12 +9,12 @@ module ThemeRenderer
 
       private
 
-        def initialize_template(record)
-          ActionView::Template.new(record.contents,
-                                   record.identifier,
-                                   record.handler,
-                                   record.details)
-        end
+      def initialize_template(record)
+        ActionView::Template.new(record.contents,
+                                 record.identifier,
+                                 record.handler,
+                                 record.details)
+      end
     end
 
     class Base

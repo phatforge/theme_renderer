@@ -21,9 +21,9 @@ group :development, halt_on_fail: true do
     # with Minitest::Spec
     watch(%r{^spec/(.*)_spec\.rb$})
     watch(%r{^test/(.*)_test\.rb$})
-    watch(%r{^lib/(.+)\.rb$})         {|m| "test/#{m[1]}_test.rb" }
-    watch(%r{^lib/theme_renderer/(.+)\.rb$})         {|m| "test/model/#{m[1]}_test.rb" }
-    watch(%r{^test/test_helper\.rb$}) {'test' }
+    watch(%r{^lib/(.+)\.rb$})         { |m| "test/#{m[1]}_test.rb" }
+    watch(%r{^lib/theme_renderer/(.+)\.rb$})         { |m| "test/model/#{m[1]}_test.rb" }
+    watch(%r{^test/test_helper\.rb$}) { 'test' }
 
     # Rails 4
     # watch(%r{^app/(.+)\.rb$})                               { |m| "test/#{m[1]}_test.rb" }

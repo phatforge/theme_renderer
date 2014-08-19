@@ -5,7 +5,7 @@ module ThemeRenderer
 
       attr_accessor :config, :theme_root, :theme_path
 
-      def initialize(config, pattern=nil)
+      def initialize(config, pattern = nil)
         config.validate!
         @config = config
         @theme_path = resolve_theme_path
@@ -18,7 +18,7 @@ module ThemeRenderer
 
       private
 
-      def records(conditions={})
+      def records(conditions = {})
         find_templates(conditions[:name],
                        conditions[:prefix],
                        conditions[:partial],

@@ -7,7 +7,7 @@ module ThemeRenderer
 
     config.theme_renderer = ThemeRenderer::Config.new
 
-    initializer "Set up default parent engine" do |app|
+    initializer 'Set up default parent engine' do |app|
       config.theme_renderer.parent_engine ||= app
     end
 

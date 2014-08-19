@@ -34,9 +34,11 @@ module ThemeRenderer
         end
 
         def current_themeable_instance
-          # current_themeable_instance = Object.const_get(theme_class.camelize.singularize).
+          # current_themeable_instance = Object.
+          # const_get(theme_class.camelize.singularize).
           #   find_by_id(params[:"#{theme_class}_id"])
-          Object.const_get(theme_class.camelize.singularize).
+          Object.
+            const_get(theme_class.camelize.singularize).
             find_by_id(params[:"#{theme_class}_id"])
         end
 

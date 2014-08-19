@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 # Declare your gem's dependencies in theme_renderer.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -6,7 +6,7 @@ source "https://rubygems.org"
 gemspec
 
 # jquery-rails is used by the dummy application
-gem "jquery-rails"
+gem 'jquery-rails'
 gem 'haml'
 
 # Declare any dependencies that are still in development here instead of in
@@ -18,13 +18,9 @@ gem 'haml'
 # gem 'debugger'
 
 # for CRuby, Rubinius, including Windows and RubyInstaller
-gem "sqlite3", :platform => [:ruby, :mswin, :mingw]
+gem 'sqlite3', platform: [:ruby, :mswin, :mingw]
 #
 # # for JRuby
-gem "jdbc-sqlite3", :platform => :jruby
+gem 'jdbc-sqlite3', platform: :jruby
 
-group :development do
-  gem 'pry-rails'
-end
-
-gem "codeclimate-test-reporter", group: :test, require: nil
+gem 'codeclimate-test-reporter', group: :test, require: nil

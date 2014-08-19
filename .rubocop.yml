@@ -1,1 +1,21 @@
 inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - test/dummy/**/*
+    - script/**/*
+
+Style/DotPosition:
+  EnforcedStyle: trailing
+
+Style/ClassVars:
+  Exclude:
+    - lib/theme_renderer/rails.rb
+
+Style/RegexpLiteral:
+  Exclude:
+    - Guardfile
+
+Metrics/LineLength:
+  Exclude:
+    - Guardfile
