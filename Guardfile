@@ -52,4 +52,8 @@ group :development, halt_on_fail: true do
     watch('Gemfile')
   end
 
+  guard 'rubycritic', run_on_start: false do
+    watch(%r{^app/(.+)\.rb$})
+    watch(%r{^lib/(.+)\.rb$})
+  end
 end
