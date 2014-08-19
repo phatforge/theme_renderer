@@ -22,6 +22,6 @@ gem 'sqlite3', platform: [:ruby, :mswin, :mingw]
 #
 # # for JRuby
 gem 'jdbc-sqlite3', platform: :jruby
-gem 'activerecord-sqlite3-adapter', platform: :jruby
+gem 'activerecord-jdbcsqlite3-adapter', platform: :jruby
 
 gem 'codeclimate-test-reporter', group: :test, require: nil
