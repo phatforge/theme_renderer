@@ -1,5 +1,11 @@
 # ThemeRenderer
 
+[![Build Status](https://travis-ci.org/phatforge/theme_renderer.svg?branch=master)](https://travis-ci.org/phatforge/theme_renderer)
+[![Code Climate](https://codeclimate.com/github/phatforge/theme_renderer/badges/gpa.svg)](https://codeclimate.com/github/phatforge/theme_renderer)
+[![Test Coverage](https://codeclimate.com/github/phatforge/theme_renderer/badges/coverage.svg)](https://codeclimate.com/github/phatforge/theme_renderer)
+[![Coverage Status](https://coveralls.io/repos/phatforge/theme_renderer/badge.png?branch=master)](https://coveralls.io/r/phatforge/theme_renderer?branch=master)
+[![Inline docs](http://inch-ci.org/github/phatforge/theme_renderer.png?branch=master)](http://inch-ci.org/github/phatforge/theme_renderer)
+
 This gem is an engine designed to allow you to render themes from a variety of
 backing stores. At first it will try and use a file store in the vein of
 themes_for_rails.
