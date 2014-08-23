@@ -1,3 +1,4 @@
+# :nodoc:
 module ThemeRenderer
   autoload :Config, 'theme_renderer/config'
   autoload :Rails, 'theme_renderer/rails'

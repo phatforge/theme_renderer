@@ -14,17 +14,23 @@ module ThemeRenderer
 
         # set_theme_resolver_for_current_request
         def resolve_theme_views(themeable_instance = current_themeable_instance)
+          # puts ">>>#{themeable_instance.inspect}<<<"
           return unless themeable_instance
           resolver = theme_resolver_for(themeable_instance)
+          # puts ">>>#{resolver.inspect}<<<"
           activate_theme(resolver)
         end
 
         def activate_theme(resolver)
-          case resolver.config.theme.activation_method
+          # puts ">>>#{resolver.config.theme.activation_method}<<<"
+
+          case resolver.config.activation_method
           when :prepend
             prepend_view_path resolver
           when :overwrite
-            self.view_paths = resolver
+            self._view_paths = resolver
+          when :append
+            append_view_path resolver
           end
         end
 
@@ -33,10 +39,27 @@ module ThemeRenderer
           @@theme_resolver[themeable.id] ||= load_theme_resolver(themeable)
         end
 
+        def current_instance_discover_path
+          [theme_config.themeable_current_method_name,
+           "current_#{theme_class}",
+           theme_class_finder]
+        end
+
         def current_themeable_instance
-          # current_themeable_instance = Object.
-          # const_get(theme_class.camelize.singularize).
-          #   find_by_id(params[:"#{theme_class}_id"])
+          current_method = nil
+          # puts theme_config.current_themeable_method.inspect
+          current_instance_discover_path.each do |meth|
+            begin
+              current_method ||= method(meth.to_s)
+            rescue NameError
+              next
+            end
+          end
+          current_method.call if current_method
+        end
+
+        def theme_class_finder
+          return unless params[:"{theme_class}_id"]
           Object.
             const_get(theme_class.camelize.singularize).
             find_by_id(params[:"#{theme_class}_id"])
@@ -52,10 +75,6 @@ module ThemeRenderer
 
         def theme_settings_attribute
           theme_config.themeable_settings_attribute
-        end
-
-        def theme_finder
-          "find_by_#{theme_id_attribute}".to_sym
         end
 
         def theme_config

@@ -17,9 +17,8 @@ module ThemeRenderer
                 end
               end
 
-    attribute 'theme.activation_method',
-              default: :prepend,
-              type: Symbol
+    attribute 'theme.valid_activation_modes',
+              default: [:prepend, :overwrite, :append]
 
     attribute 'storage.file.theme_root',
               default: 'themes',
@@ -41,13 +40,24 @@ module ThemeRenderer
               default: 'theme_settings',
               type: String
 
+    attribute 'themeable_current_method_name',
+              default: 'current_theme',
+              type: String
+
     attribute 'parent_engine',
               default: ::Rails.application,
               type: Class
 
-    attribute 'theme_transform',
-              default: nil,
-              type: Proc
+    attribute 'theme.activation_method',
+              default: :prepend
+
+    def activation_method
+      if theme.valid_activation_modes.include?(theme.activation_method)
+        theme.activation_method
+      else
+        :prepend
+      end
+    end
 
     def validate!
       self.class.validate!(self)

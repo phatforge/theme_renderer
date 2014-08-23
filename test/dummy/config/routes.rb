@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
 
+  get "notes/index"
+
   resources :site do
     resources :post
   end
+
+  resources :notes
 
   get "post/show"
 

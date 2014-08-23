@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140804163227) do
+ActiveRecord::Schema.define(:version => 20140819231230) do
+
+  create_table "posts", :force => true do |t|
+    t.integer  "site_id"
+    t.string   "title"
+    t.text     "body"
+    t.string   "slug"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "posts", ["site_id"], :name => "index_posts_on_site_id"
 
   create_table "sites", :force => true do |t|
     t.string   "name"
