@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'buff-config', '~> 1.0.1'
   s.add_runtime_dependency 'rails', '~> 3.2.17'
   s.add_runtime_dependency 'tilt'
+  s.add_runtime_dependency 'rugged'
+  s.add_runtime_dependency 'redis'
 
   s.add_development_dependency 'rails_best_practices'
   s.add_development_dependency 'guard-minitest'
