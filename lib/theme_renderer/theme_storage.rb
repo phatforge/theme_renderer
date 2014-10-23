@@ -1,19 +1,8 @@
 module ThemeRenderer
   module ThemeStorage
     module CoreMethods
-      def get(conditions = {})
-        records(conditions).flatten.collect do |record|
-          initialize_template(record)
-        end
-      end
-
-      private
-
-      def initialize_template(record)
-        ActionView::Template.new(record.contents,
-                                 record.identifier,
-                                 record.handler,
-                                 record.details)
+      def get_templates(conditions = {})
+        templates(conditions)
       end
     end
 

@@ -11,7 +11,6 @@ module ThemeRenderer
     def publish!
       ThemeRenderer::Publisher.new(self).publish!
       next_version = version.try(:next) || Version.new
-      # ...
       version = next_version.save
     end
 
@@ -20,7 +19,6 @@ module ThemeRenderer
     end
 
     class Version < ActiveRecord::Base
-
       self.table_name = 'theme_versions'
 
       attr_accessor :number

@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(:version => 20141023115138) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "theme_renderer_themes", :force => true do |t|
+    t.string   "name"
+    t.string   "version"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "theme_versions", :force => true do |t|
     t.integer  "version"
     t.string   "sha"

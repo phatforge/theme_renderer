@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.files       += ['LICENSE.txt', 'Rakefile', 'README.md']
   s.test_files  = Dir['{test,spec}/**/*']
 
-  s.add_dependency 'buff-config', '~> 1.0.1'
+  s.add_runtime_dependency 'buff-config'
   s.add_runtime_dependency 'rails', '~> 3.2.17'
   s.add_runtime_dependency 'tilt'
   s.add_runtime_dependency 'rugged'

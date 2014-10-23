@@ -28,6 +28,10 @@ module ThemeRenderer
               default: 'default',
               type: String
 
+    attribute 'theme_repo',
+              default: 'file:///tmp/test_repo',
+              type: String
+
     attribute 'themeable_class',
               default: 'site',
               type: String

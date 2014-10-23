@@ -18,7 +18,14 @@ module ThemeRenderer
 
       private
 
-      def records(conditions = {})
+      def templates(conditions = {})
+        records(conditions).collect do |record|
+          initialize_template(record)
+        end
+      end
+
+      def records(conditions)
+        # call method from super class.
         find_templates(conditions[:name],
                        conditions[:prefix],
                        conditions[:partial],
@@ -27,8 +34,6 @@ module ThemeRenderer
       end
 
       def resolve_theme_path
-        # puts config.inspect
-        # puts @theme_path
         theme_id = normalize_theme_id(config.theme_id)
         @theme_path ||= [::Rails.root, theme_root, theme_id].join('/')
       end

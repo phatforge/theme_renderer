@@ -25,7 +25,7 @@ module ThemeRenderer
 
     def templates_from_storage(conditions)
       stores.collect do |store|
-        store_instance(store).get(conditions)
+        store_instance(store).get_templates(conditions)
       end.flatten
     end
 

@@ -1,22 +1,27 @@
 require 'test_helper'
+require 'redis' # turn into redis_helper/redis support file
 
 describe ThemeRenderer::ThemeStorage::Redis do
 
   subject { ThemeRenderer::ThemeStorage::Redis }
 
-  let(:config_json) { { theme: {stores: ['Redis']},  theme_id: 'dummy_1' }.to_json }
+  let(:config_json) do
+    { theme: { stores: ['ThemeRenderer::ThemeStorage::Redis'] },
+      theme_id: 'dummy_1' }.to_json
+  end
   let(:config) { ThemeRenderer::Config.from_json(config_json) }
 
   describe '#initialize_template' do
-    before(:each) do
+    let(:resolver) { ThemeRenderer::ThemeResolver.new(config) }
+
+    before do
       @details  = { formats: [:html], locale: [:en], handlers: [:haml] }
+      Redis.new(db: 5).set('/dummy_1/views/post/show/', 'poi')
     end
 
     it 'should return a template object' do
-      puts config
-      record = ThemeRenderer::ThemeResolver.new(config).
-        find_templates('show', 'post', false, @details).first
-      subject.new(config).initialize_template(record).must_be_kind_of ActionView::Template
+      template = resolver.find_templates('show', 'post', false, @details).first
+      template.must_be_kind_of ActionView::Template
     end
   end
 end
