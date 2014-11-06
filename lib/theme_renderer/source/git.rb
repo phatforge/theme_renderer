@@ -39,6 +39,10 @@ module ThemeRenderer
         end
       end
 
+      def branch_sha(branch_name='master')
+        repo.branches[branch_name].target_id
+      end
+
       def read_content(blob)
         repo.lookup(blob[:oid]).content
       end

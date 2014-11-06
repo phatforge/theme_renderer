@@ -7,11 +7,9 @@ describe ThemeRenderer::Publisher do
     let(:theme) { ThemeRenderer::Theme.new('Theme', repo_uri) }
     subject { ThemeRenderer::Publisher.new(theme) }
 
-
     it 'must pass' do
       subject.call.must_equal nil
     end
-
   end
 
   describe '#call without defined repo' do
@@ -21,6 +19,5 @@ describe ThemeRenderer::Publisher do
     it 'shall not pass' do
       subject.call.must_equal false
     end
-
   end
 end

@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe ThemeRenderer::Source::Git do
 
-  let(:repo_uri) { URI.parse("file://#{File.expand_path('../..', __FILE__)}/test_repo") }
+  let(:repo_uri) { URI.parse("file://#{File.expand_path('../../..', __FILE__)}/test_repo") }
 
   subject { ThemeRenderer::Source::Git.new(repo_uri.path) }
 

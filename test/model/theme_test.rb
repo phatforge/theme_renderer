@@ -1,11 +1,20 @@
 # -*- encoding : utf-8 -*-
 require 'test_helper'
+require 'support/test_repo'
 
 describe ThemeRenderer::Theme do
   subject { Theme }
 
-  describe '#new theme' do
+  before do
+    # repo = create_git_repo
+  end
 
+  let(:repo) { create_git_repo }
+  let(:repo_uri) { URI.parse("git://#{repo.path}") }
+  let(:repo_sha) { repo.branches['master'].target_id }
+
+
+  describe '#new theme' do
     let(:theme) { ThemeRenderer::Theme.new('My Theme') }
 
     it 'must start with no version' do
@@ -22,14 +31,17 @@ describe ThemeRenderer::Theme do
   end
 
   describe '#publishing a theme' do
-    let(:theme) { ThemeRenderer::Theme.new('woot') }
+    let(:theme) { ThemeRenderer::Theme.new('woot', repo_uri) }
 
     it 'must increment #version' do
-      # skip "cos we'er crap"
       theme.publish!
       theme.version_number.must_equal 1
+      theme.version_sha.wont_equal nil
+
+      commit_file(repo)
       theme.publish!
-      theme.version_number.must_equal 3
+      theme.version_number.must_equal 2
+      theme.version_sha.must_equal repo_sha
     end
   end
 end
