@@ -16,14 +16,20 @@ module ThemeRenderer
         @config = config
       end
 
-      def initialize_template(record, details, handler, format)
-        contents = redis.get(record)
-        details[:format] = format.to_sym
-        details[:virtual_path] = record
+      def initialize_template(record, details, conditions)
+        handler = ::ActionView::Template.registered_template_handler(record.handler)
+
+        contents = record.source
+        identifier = "#{self.class} - #{record.key}"
+
+        details[:format] = Mime[record.format]
+        details[:virtual_path] = virtual_path(record.path, record.partial)
+        details[:updated_at] = Time.parse(record.updated_at)
+        # details[:virtual_path] = record
 
         ActionView::Template.new(
           contents,
-          record,
+          identifier,
           handler,
           details
         )
@@ -32,15 +38,16 @@ module ThemeRenderer
       private
 
       def templates(conditions = {})
-        formats = conditions[:formats]
-
         records(conditions).collect do |record|
-          handler, format = extract_handler_and_format(record, formats)
-          initialize_template(record, conditions[:details], handler, format)
+          initialize_template(record, conditions[:details], conditions)
         end
       end
 
       def records(conditions = {})
+        # resolve virtual_path
+        # resolve key_pattern / default_pattern
+        # redis_data(key_pattern)
+        #
         query_storage(conditions[:name],
                       conditions[:prefix],
                       conditions[:partial],
@@ -54,12 +61,12 @@ module ThemeRenderer
       end
 
       def query(path, _details, _formats)
-        pattern = build_query(path)
-        redis_data(pattern)
+        key_pattern = build_query(path)
+        redis_data(key_pattern)
       end
 
       def build_query(path)
-        [theme_root, config.theme_id, 'views', path, '*'].join('/')
+        [theme_root, config.theme_id, 'views', path ].join('/') << '*'
       end
 
       def extract_handler_and_format(path, default_formats)
@@ -72,7 +79,26 @@ module ThemeRenderer
       end
 
       def redis_data(pattern)
-        redis.scan_each(match: pattern)
+        data_set = []
+        redis.scan_each(match: pattern) do |key|
+          data = redis.hgetall(key)
+          data.merge!(key: key)
+          data_set << OpenStruct.new(data)
+        end
+        data_set
+      end
+
+      def normalize_path(name, prefix)
+        [prefix, name].compact.join('/')
+      end
+
+      def virtual_path(path, partial)
+        return path unless partial
+        if index = path.rindex('/')
+          path.insert(index + 1, '_')
+        else
+          "_#{path}"
+        end
       end
 
       def redis

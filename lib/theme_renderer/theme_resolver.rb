@@ -11,7 +11,6 @@ module ThemeRenderer
     def find_templates(name, prefix, partial, details)
       conditions = {
         name: name, prefix: prefix,
-        path: normalize_path(name, prefix),
         locale: normalize_array(details[:locale]).first,
         formats: normalize_array(details[:formats]).first,
         handlers: normalize_array(details[:handlers]),
@@ -39,10 +38,6 @@ module ThemeRenderer
 
     def normalize_array(array)
       array.map(&:to_s)
-    end
-
-    def normalize_path(name, prefix)
-      [prefix, name].compact.join('/')
     end
   end
 end

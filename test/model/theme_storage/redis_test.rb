@@ -14,18 +14,33 @@ describe ThemeRenderer::ThemeStorage::Redis do
   describe '#initialize_template' do
     let(:resolver) { ThemeRenderer::ThemeResolver.new(config) }
 
+    let(:details) do
+      { formats: [:html], locale: [:en], handlers: [:haml] }
+    end
+    let(:templ) do
+      { source: 'poi', updated_at: Time.now.utc,
+                format: :html, path: 'post/show',
+                handler: :haml }
+    end
+
     before do
-      @details  = { formats: [:html], locale: [:en], handlers: [:haml] }
-      Redis.new(db: 5).set('/dummy_1/views/post/show.haml.html', 'poi')
     end
 
     it 'should return a template object' do
-      template = resolver.find_templates('show', 'post', false, @details).first
+      redis_record = templ.merge(details)
+      redis_key = '/dummy_1/views/post/show.haml.html'
+      redis_record_hash = *(redis_record.map { |k, v| [k, v] }.flatten)
+
+      Redis.new(db: 5).del(redis_key)
+      Redis.new(db: 5).hmset(redis_key, redis_record_hash)
+
+      template = resolver.find_templates('show', 'post', false, details).first
       template.must_be_kind_of ActionView::Template
       template.source.must_match(/poi/)
       template.formats.must_equal [:html]
       template.virtual_path.must_equal 'post/show'
       template.handler.must_be_same_as Haml::Plugin
+      template.updated_at.to_s.must_equal templ[:updated_at].to_s
     end
   end
 end
