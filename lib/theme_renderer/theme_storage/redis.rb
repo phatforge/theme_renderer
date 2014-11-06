@@ -8,7 +8,7 @@ module ThemeRenderer
       DEFAULT_PATTERN = ":prefix/:action{.:locale,}{.:formats,}{.:handlers,}"
       # rubocop:enable Style/StringLiterals
 
-      attr_accessor :config, :theme_root, :theme_path
+      attr_accessor :config, :theme_root, :theme_path, :path
 
       def initialize(config, pattern = nil)
         config.validate!
@@ -18,7 +18,8 @@ module ThemeRenderer
 
       def initialize_template(record, details, handler, format)
         contents = redis.get(record)
-        details[:format] = format
+        details[:format] = format.to_sym
+        details[:virtual_path] = record
 
         ActionView::Template.new(
           contents,

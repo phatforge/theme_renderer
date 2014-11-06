@@ -16,12 +16,16 @@ describe ThemeRenderer::ThemeStorage::Redis do
 
     before do
       @details  = { formats: [:html], locale: [:en], handlers: [:haml] }
-      Redis.new(db: 5).set('/dummy_1/views/post/show/', 'poi')
+      Redis.new(db: 5).set('/dummy_1/views/post/show.haml.html', 'poi')
     end
 
     it 'should return a template object' do
       template = resolver.find_templates('show', 'post', false, @details).first
       template.must_be_kind_of ActionView::Template
+      template.source.must_match(/poi/)
+      template.formats.must_equal [:html]
+      template.virtual_path.must_equal 'post/show'
+      template.handler.must_be_same_as Haml::Plugin
     end
   end
 end
