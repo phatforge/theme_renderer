@@ -9,6 +9,7 @@ module ThemeRenderer
       # rubocop:enable Style/StringLiterals
 
       attr_accessor :config, :theme_root, :theme_path, :path
+      attr_accessor :name, :prefix, :pattern
 
       def initialize(config, pattern = nil)
         config.validate!
@@ -16,16 +17,16 @@ module ThemeRenderer
         @config = config
       end
 
-      def initialize_template(record, details, conditions)
-        handler = ::ActionView::Template.registered_template_handler(record.handler)
+      def initialize_template(record)
+        details = {}
 
         contents = record.source
         identifier = "#{self.class} - #{record.key}"
+        handler = ::ActionView::Template.registered_template_handler(record.handler)
 
         details[:format] = Mime[record.format]
         details[:virtual_path] = virtual_path(record.path, record.partial)
         details[:updated_at] = Time.parse(record.updated_at)
-        # details[:virtual_path] = record
 
         ActionView::Template.new(
           contents,
@@ -38,8 +39,9 @@ module ThemeRenderer
       private
 
       def templates(conditions = {})
+        assign_instance_vars(conditions)
         records(conditions).collect do |record|
-          initialize_template(record, conditions[:details], conditions)
+          initialize_template(record)
         end
       end
 
@@ -55,6 +57,11 @@ module ThemeRenderer
                      )
       end
 
+      def assign_instance_vars(conditions)
+        @name   = conditions[:name]
+        @prefix = conditions[:prefix]
+      end
+
       def query_storage(name, prefix, partial, details)
         path = ::ActionView::Resolver::Path.build(name, prefix, partial)
         query(path, details, details[:formats])
@@ -66,16 +73,7 @@ module ThemeRenderer
       end
 
       def build_query(path)
-        [theme_root, config.theme_id, 'views', path ].join('/') << '*'
-      end
-
-      def extract_handler_and_format(path, default_formats)
-        pieces = ::File.basename(path).split('.')
-        pieces.shift
-        handler = ActionView::Template.handler_for_extension(pieces.pop)
-        format  = pieces.last && Mime[pieces.last]
-        format ||= default_formats
-        [handler, format]
+        [theme_root, config.theme_id, 'views', path].join('/') << '*'
       end
 
       def redis_data(pattern)
@@ -94,7 +92,9 @@ module ThemeRenderer
 
       def virtual_path(path, partial)
         return path unless partial
-        if index = path.rindex('/')
+        index = path.rindex('/')
+        puts index
+        if index
           path.insert(index + 1, '_')
         else
           "_#{path}"
