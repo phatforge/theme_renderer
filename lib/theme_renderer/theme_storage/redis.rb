@@ -73,8 +73,8 @@ module ThemeRenderer
       end
 
       def redis_records(pattern)
-        redis.scan_each(match: pattern).collect do |key|
-          data = redis.hgetall(key)
+        redis_gateway.scan_each(match: pattern).collect do |key|
+          data = redis_gateway.hgetall(key)
           data.merge!(key: key)
           OpenStruct.new(data)
         end
@@ -90,7 +90,7 @@ module ThemeRenderer
         end
       end
 
-      def redis
+      def redis_gateway
         ::Redis.new(db: 5)
       end
     end
