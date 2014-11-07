@@ -5,11 +5,10 @@ module ThemeRenderer
   module ThemeStorage
     class Redis < Base
       # rubocop:disable Style/StringLiterals
-      DEFAULT_PATTERN = ":prefix/:action{.:locale,}{.:formats,}{.:handlers,}"
+      DEFAULT_PATTERN = "/%{theme_prefix}/%{prefix}/%{action}.%{locale}.%{formats}.%{handler}"
       # rubocop:enable Style/StringLiterals
 
-      attr_accessor :config, :theme_root, :theme_path, :path
-      attr_accessor :name, :prefix, :pattern
+      attr_accessor :config, :theme_root, :theme_path, :path, :pattern
 
       def initialize(config, pattern = nil)
         config.validate!
@@ -18,38 +17,44 @@ module ThemeRenderer
       end
 
       def initialize_template(record)
-        ActionView::Template.new(
-          record.source,
-          "#{self.class} - #{record.key}",
-          handler_for(record.handler),
-          details_hash_for(record)
+        ::ActionView::Template.new(
+          record.source,                   # template source
+          "#{self.class} - #{record.key}", # template identifier
+          handler_for(record.handler),     # template handler
+          details_hash_for(record)         # template details
         )
       end
 
       private
 
       def templates(conditions = {})
-        assign_instance_vars(conditions)
         records(conditions).collect do |record|
           initialize_template(record)
         end
       end
 
       def records(conditions = {})
-        # resolve virtual_path
-        # resolve key_pattern / default_pattern
-        # redis_data(key_pattern)
-        #
-        query_storage(conditions[:name],
-                      conditions[:prefix],
-                      conditions[:partial],
-                      conditions[:details]
-                     )
+        interpolate_pattern(conditions)
+        puts pattern
+        redis_records(pattern)
       end
 
-      def assign_instance_vars(conditions)
-        @name   = conditions[:name]
-        @prefix = conditions[:prefix]
+      def interpolate_pattern(dict)
+        dict[:theme_prefix] = theme_prefix
+        dict[:action] = virtual_path(dict[:name], dict[:partial])
+        dict[:handler] = dict[:handlers].first
+        @pattern = pattern % dict
+      end
+
+      def theme_prefix
+        [
+        theme_identifier,
+        'views'
+        ].join('/')
+      end
+
+      def theme_identifier
+        config.theme.sha || config.theme_id
       end
 
       def handler_for(handler_name)
@@ -68,21 +73,7 @@ module ThemeRenderer
         }
       end
 
-      def query_storage(name, prefix, partial, details)
-        path = ::ActionView::Resolver::Path.build(name, prefix, partial)
-        query(path, details, details[:formats])
-      end
-
-      def query(path, _details, _formats)
-        key_pattern = build_query(path)
-        redis_data(key_pattern)
-      end
-
-      def build_query(path)
-        [theme_root, config.theme_id, 'views', path].join('/') << '*'
-      end
-
-      def redis_data(pattern)
+      def redis_records(pattern)
         data_set = []
         redis.scan_each(match: pattern) do |key|
           data = redis.hgetall(key)

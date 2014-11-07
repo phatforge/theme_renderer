@@ -17,23 +17,22 @@ describe ThemeRenderer::ThemeStorage::Redis do
     let(:details) do
       { formats: [:html], locale: [:en], handlers: [:haml] }
     end
+
     let(:partial_templ) do
       { source: 'ioppoi', updated_at: Time.now.to_i,
                 format: :html, path: 'post/partial',
                 handler: :erb, locale: :en }
     end
+
     let(:templ) do
       { source: 'poi', updated_at: Time.now.to_i,
                 format: :html, path: 'post/show',
                 handler: :haml, locale: :en }
     end
 
-    before do
-    end
-
     it 'should return a template object' do
       redis_record = templ.merge(details)
-      redis_key = '/dummy_1/views/post/show.haml.html'
+      redis_key = '/dummy_1/views/post/show.en.html.haml'
       redis_record_hash = *(redis_record.map { |k, v| [k, v] }.flatten)
 
       Redis.new(db: 5).del(redis_key)
@@ -50,7 +49,7 @@ describe ThemeRenderer::ThemeStorage::Redis do
 
     it 'should return a partial template object' do
       redis_record = partial_templ.merge(details)
-      redis_key = '/dummy_1/views/post/_partial.haml.html'
+      redis_key = '/dummy_1/views/post/_partial.en.html.haml'
       redis_record_hash = *(redis_record.map { |k, v| [k, v] }.flatten)
 
       Redis.new(db: 5).del(redis_key)
