@@ -3,7 +3,8 @@ require 'test_helper'
 describe ThemeRenderer::Publisher do
 
   describe '#call with defined repo' do
-    let(:repo_uri) { URI.parse("file://#{File.expand_path('../..', __FILE__)}/test_repo") }
+    let(:path) { "file://#{File.expand_path('../..', __FILE__)}/test_repo" }
+    let(:repo_uri) { URI.parse(path) }
     let(:theme) { ThemeRenderer::Theme.new('Theme', repo_uri) }
     subject { ThemeRenderer::Publisher.new(theme) }
 

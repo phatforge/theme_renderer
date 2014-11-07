@@ -2,7 +2,8 @@ require 'test_helper'
 
 describe ThemeRenderer::Source::Git do
 
-  let(:repo_uri) { URI.parse("file://#{File.expand_path('../../..', __FILE__)}/test_repo") }
+  let(:path) { "file://#{File.expand_path('../../..', __FILE__)}/test_repo" }
+  let(:repo_uri) { URI.parse(path) }
 
   subject { ThemeRenderer::Source::Git.new(repo_uri.path) }
 
@@ -12,7 +13,7 @@ describe ThemeRenderer::Source::Git do
     end
 
     it 'must pass' do
-      subject.walk {|a,b,c| }.must_equal nil
+      subject.walk { |_a, _b, _c| }.must_equal nil
     end
 
   end

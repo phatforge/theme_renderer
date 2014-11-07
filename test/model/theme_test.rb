@@ -13,7 +13,6 @@ describe ThemeRenderer::Theme do
   let(:repo_uri) { URI.parse("git://#{repo.path}") }
   let(:repo_sha) { repo.branches['master'].target_id }
 
-
   describe '#new theme' do
     let(:theme) { ThemeRenderer::Theme.new('My Theme') }
 

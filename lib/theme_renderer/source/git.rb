@@ -10,7 +10,6 @@ require 'rugged'
 #
 module ThemeRenderer
   module Source
-
     # @example
     #   walker = Git.new
     #   walker.walk do |item,path|
@@ -21,12 +20,12 @@ module ThemeRenderer
     class Git
       attr_accessor :repo, :master
 
-      def initialize(path='./')
+      def initialize(path = './')
         @repo = Rugged::Repository.new(path)
         @master = repo.branches['master']
       end
 
-      def walk(items=nil, path='./', &block)
+      def walk(items = nil, path = './', &block)
         items ||= master.target.tree
 
         items.each do |item|
@@ -39,7 +38,7 @@ module ThemeRenderer
         end
       end
 
-      def branch_sha(branch_name='master')
+      def branch_sha(branch_name = 'master')
         repo.branches[branch_name].target_id
       end
 

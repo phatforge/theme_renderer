@@ -11,7 +11,7 @@ module ThemeRenderer
     def call
       return false unless theme.repository_uri
       # Fetch latest source
-      TR::Source::Git.new(theme.repository_uri.path).walk do |content, path_key, item|
+      TR::Source::Git.new(theme.repository_uri.path).walk do |content, path, item|
         # puts item
       end
       # Process source:

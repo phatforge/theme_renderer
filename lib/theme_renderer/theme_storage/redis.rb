@@ -4,15 +4,15 @@ require 'action_view/template'
 module ThemeRenderer
   module ThemeStorage
     class Redis < Base
-      # rubocop:disable Style/StringLiterals
-      DEFAULT_PATTERN = "/%{theme_prefix}/%{prefix}/%{action}.%{locale}.%{formats}.%{handler}"
-      # rubocop:enable Style/StringLiterals
+      # rubocop:disable Metrics/LineLength
+      DEFAULT_PATTERN = '/%{theme_prefix}/%{prefix}/%{action}.%{locale}.%{formats}.%{handler}'.freeze
+      # rubocop:enable Metrics/LineLength
 
       attr_accessor :config, :theme_root, :theme_path, :path, :pattern
 
       def initialize(config, pattern = nil)
         config.validate!
-        @pattern = pattern || DEFAULT_PATTERN
+        @pattern = pattern || DEFAULT_PATTERN.dup
         @config = config
       end
 
@@ -47,8 +47,8 @@ module ThemeRenderer
 
       def theme_prefix
         [
-        theme_identifier,
-        'views'
+          theme_identifier,
+          'views'
         ].join('/')
       end
 
