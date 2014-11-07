@@ -35,7 +35,6 @@ module ThemeRenderer
 
       def records(conditions = {})
         interpolate_pattern(conditions)
-        puts pattern
         redis_records(pattern)
       end
 
@@ -74,13 +73,11 @@ module ThemeRenderer
       end
 
       def redis_records(pattern)
-        data_set = []
-        redis.scan_each(match: pattern) do |key|
+        redis.scan_each(match: pattern).collect do |key|
           data = redis.hgetall(key)
           data.merge!(key: key)
-          data_set << OpenStruct.new(data)
+          OpenStruct.new(data)
         end
-        data_set
       end
 
       def virtual_path(path, partial)
