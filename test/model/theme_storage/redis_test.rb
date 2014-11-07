@@ -18,12 +18,12 @@ describe ThemeRenderer::ThemeStorage::Redis do
       { formats: [:html], locale: [:en], handlers: [:haml] }
     end
     let(:partial_templ) do
-      { source: 'ioppoi', updated_at: Time.now.utc,
+      { source: 'ioppoi', updated_at: Time.now.to_i,
                 format: :html, path: 'post/partial',
                 handler: :erb, locale: :en }
     end
     let(:templ) do
-      { source: 'poi', updated_at: Time.now.utc,
+      { source: 'poi', updated_at: Time.now.to_i,
                 format: :html, path: 'post/show',
                 handler: :haml, locale: :en }
     end
@@ -45,7 +45,7 @@ describe ThemeRenderer::ThemeStorage::Redis do
       template.formats.must_equal [:html]
       template.virtual_path.must_equal 'post/show'
       template.handler.must_be_same_as Haml::Plugin
-      template.updated_at.to_s.must_equal templ[:updated_at].to_s
+      template.updated_at.to_s.must_equal Time.at(templ[:updated_at])
     end
 
     it 'should return a partial template object' do
@@ -62,7 +62,7 @@ describe ThemeRenderer::ThemeStorage::Redis do
       template.formats.must_equal [:html]
       template.virtual_path.must_equal 'post/partial'
       template.handler.must_be_instance_of ActionView::Template::Handlers::ERB
-      template.updated_at.to_s.must_equal templ[:updated_at].to_s
+      template.updated_at.to_s.must_equal Time.at(templ[:updated_at])
     end
   end
 end

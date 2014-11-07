@@ -18,21 +18,11 @@ module ThemeRenderer
       end
 
       def initialize_template(record)
-        details = {}
-
-        contents = record.source
-        identifier = "#{self.class} - #{record.key}"
-        handler = ::ActionView::Template.registered_template_handler(record.handler)
-
-        details[:format] = Mime[record.format]
-        details[:virtual_path] = virtual_path(record.path, record.partial)
-        details[:updated_at] = Time.parse(record.updated_at)
-
         ActionView::Template.new(
-          contents,
-          identifier,
-          handler,
-          details
+          record.source,
+          "#{self.class} - #{record.key}",
+          handler_for(record.handler),
+          details_hash_for(record)
         )
       end
 
@@ -62,6 +52,22 @@ module ThemeRenderer
         @prefix = conditions[:prefix]
       end
 
+      def handler_for(handler_name)
+        ::ActionView::Template.registered_template_handler(handler_name)
+      end
+
+      def mime_for(format)
+        Mime[format]
+      end
+
+      def details_hash_for(record)
+        {
+          virtual_path: virtual_path(record.path, record.partial),
+          format: mime_for(record.format.to_sym),
+          updated_at: Time.at(record.updated_at.to_i)
+        }
+      end
+
       def query_storage(name, prefix, partial, details)
         path = ::ActionView::Resolver::Path.build(name, prefix, partial)
         query(path, details, details[:formats])
@@ -86,14 +92,9 @@ module ThemeRenderer
         data_set
       end
 
-      def normalize_path(name, prefix)
-        [prefix, name].compact.join('/')
-      end
-
       def virtual_path(path, partial)
         return path unless partial
         index = path.rindex('/')
-        puts index
         if index
           path.insert(index + 1, '_')
         else
