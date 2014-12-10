@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/phatforge/theme_renderer.png?label=ready&title=Ready)](https://waffle.io/phatforge/theme_renderer)
 # ThemeRenderer
 
 [![Build Status](https://travis-ci.org/phatforge/theme_renderer.svg?branch=master)](https://travis-ci.org/phatforge/theme_renderer)
